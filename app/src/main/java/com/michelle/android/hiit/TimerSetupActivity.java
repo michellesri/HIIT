@@ -10,12 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TimerSetupActivity extends AppCompatActivity {
 
-    private WorkoutStep warmUp = new WorkoutStep("Warm Up", 10);
+    private WorkoutStep warmUp = new WorkoutStep("Warm Up", 2);
 
     ArrayList<WorkoutStep> workoutSteps = new ArrayList<>();
 
@@ -28,7 +27,7 @@ public class TimerSetupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer_setup);
 
-        final WorkoutStep work = new WorkoutStep("Work", 10);
+        final WorkoutStep work = new WorkoutStep("Work", 3);
         workoutSteps.add(work);
         WorkoutStep rest = new WorkoutStep("Rest", 5);
         workoutSteps.add(rest);
@@ -62,7 +61,7 @@ public class TimerSetupActivity extends AppCompatActivity {
 
     private void setWorkoutStep(WorkoutStep workoutStep, View parent) {
         ((TextView) parent.findViewById(R.id.timer_item_label)).setText(workoutStep.label);
-        ((TextView) parent.findViewById(R.id.timer_item_time)).setText(TimerUtils.renderTimer(workoutStep.time));
+        ((TextView) parent.findViewById(R.id.timer_item_time)).setText(TimerUtils.formatTime(workoutStep.time));
     }
 
 }
