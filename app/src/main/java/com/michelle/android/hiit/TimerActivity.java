@@ -44,6 +44,7 @@ public class TimerActivity extends AppCompatActivity {
         Intent intent = getIntent();
         steps = (ArrayList<WorkoutStep>) intent.getSerializableExtra(EXTRA_STEPS);
         renderStepsInTimer(steps, currentIntStep);
+        time = currentWorkoutStep.time;
 
     }
 
@@ -51,10 +52,9 @@ public class TimerActivity extends AppCompatActivity {
         playPauseBtnIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("click");
                 if (!isPlay) {
                     playPauseBtnIv.setImageResource(R.drawable.ic_pause_48dp);
-                    startTimer();
+                    resumeTimer();
                     isPlay = true;
                 } else {
                     playPauseBtnIv.setImageResource(R.drawable.ic_play_48dp);
@@ -93,6 +93,10 @@ public class TimerActivity extends AppCompatActivity {
 
     private void startTimer() {
         time = currentWorkoutStep.time;
+        resumeTimer();
+    }
+
+    private void resumeTimer() {
         // stop timer in case it wasn't stopped before. theoretically, this shouldn't happen
         stopTimer();
         scheduleTimer();
