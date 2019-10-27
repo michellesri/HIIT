@@ -43,6 +43,8 @@ public class TimerSetupActivity extends AppCompatActivity {
         initializeRecyclerViewAndWorkoutSteps();
         initializeItemTouchHelper();
         initializeOnClickListeners();
+
+
     }
 
     private void initializeRecyclerViewAndWorkoutSteps() {
@@ -65,7 +67,15 @@ public class TimerSetupActivity extends AppCompatActivity {
         WorkoutStep rounds = new WorkoutStep("Rounds", 8);
         workoutSteps.add(rounds);
 
-        mAdapter.setDataset(workoutSteps);
+        Intent intent = getIntent();
+        PresetStep presetStep = (PresetStep) intent.getSerializableExtra("PRESET_STEP");
+
+        if (presetStep == null || !presetStep.workoutList.isEmpty()) {
+            mAdapter.setDataset(presetStep.workoutList);
+        } else {
+            mAdapter.setDataset(workoutSteps);
+        }
+
         recyclerView.setAdapter(mAdapter);
 
         setWorkoutStep(warmUp, findViewById(R.id.warm_up_container));
@@ -160,7 +170,7 @@ public class TimerSetupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (workoutStep.time != 0) {
-                    
+
                     workoutStep.time -= 1;
                 }
                 time.setText(TimerUtils.formatTime(workoutStep.time));
